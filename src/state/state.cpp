@@ -11,9 +11,58 @@
  * 
  * @return int 
  */
-int State::evaluate(){
+int State::evaluate(State* state){
   // [TODO] design your own evaluation function
-  return 0;
+  Board cur_board = state->board;
+  int value[2];
+  if(!state->player){
+    for (int i=0; i<BOARD_H; i++) {
+      for (int j=0; j<BOARD_W; j++) {
+        char place = cur_board.board[state->player][i][j];
+        switch(place){
+          case '0':
+            continue;
+          case '1':
+            value[0] += 10;
+          case '2':
+            value[0] += 20;
+          case '3':
+            value[0] += 30;
+          case '4':
+            value[0] += 40;
+          case '5':
+            value[0] += 50;
+          case '6':
+            value[0] += 100;
+        }
+      }
+    }
+  }
+  else{
+    for (int i=0; i<BOARD_H; i++) {
+      for (int j=0; j<BOARD_W; j++) {
+        char place = cur_board.board[state->player][i][j];
+        switch(place){
+          case '0':
+            continue;
+          case '1':
+            value[1] += 10;
+          case '2':
+            value[1] += 20;
+          case '3':
+            value[1] += 30;
+          case '4':
+            value[1] += 40;
+          case '5':
+            value[1] += 50;
+          case '6':
+            value[1] += 100;
+        }
+      }
+    }
+  }
+
+  return value[0] - value[1];
 }
 
 
