@@ -11,57 +11,64 @@
  * 
  * @return int 
  */
-int State::evaluate(State* state){
+int State::evaluate(){
   // [TODO] design your own evaluation function
-  Board cur_board = state->board;
+  Board cur_board = this->board;
   int value[2];
-  if(!state->player){
-    for (int i=0; i<BOARD_H; i++) {
-      for (int j=0; j<BOARD_W; j++) {
-        char place = cur_board.board[state->player][i][j];
-        switch(place){
-          case '0':
-            continue;
-          case '1':
-            value[0] += 10;
-          case '2':
-            value[0] += 20;
-          case '3':
-            value[0] += 30;
-          case '4':
-            value[0] += 40;
-          case '5':
-            value[0] += 50;
-          case '6':
-            value[0] += 100;
-        }
+  for (int i=0; i<BOARD_H; i++) {
+    for (int j=0; j<BOARD_W; j++) {
+      char place = cur_board.board[0][i][j];
+      switch(place){
+        case '0':
+          continue;
+        case '1':
+          value[0] += 1;
+          break;
+        case '2':
+          value[0] += 5;
+          break;
+        case '3':
+          value[0] += 3;
+          break;
+        case '4':
+          value[0] += 3;
+          break;
+        case '5':
+          value[0] += 9;
+          break;
+        case '6':
+          value[0] += 1000;
+          break;
       }
     }
   }
-  else{
-    for (int i=0; i<BOARD_H; i++) {
-      for (int j=0; j<BOARD_W; j++) {
-        char place = cur_board.board[state->player][i][j];
-        switch(place){
-          case '0':
-            continue;
-          case '1':
-            value[1] += 10;
-          case '2':
-            value[1] += 20;
-          case '3':
-            value[1] += 30;
-          case '4':
-            value[1] += 40;
-          case '5':
-            value[1] += 50;
-          case '6':
-            value[1] += 100;
-        }
+  for (int i=0; i<BOARD_H; i++) {
+    for (int j=0; j<BOARD_W; j++) {
+      char place = cur_board.board[1][i][j];
+      switch(place){
+        case '0':
+          continue;
+        case '1':
+          value[1] += 1;
+          break;
+        case '2':
+          value[1] += 5;
+          break;
+        case '3':
+          value[1] += 3;
+          break;
+        case '4':
+          value[1] += 3;
+          break;
+        case '5':
+          value[1] += 9;
+          break;
+        case '6':
+          value[1] += 1000;
+          break;
       }
     }
   }
-
   return value[0] - value[1];
 }
 
