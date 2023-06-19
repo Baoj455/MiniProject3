@@ -11,65 +11,62 @@
  * 
  * @return int 
  */
-int State::evaluate(){
+int State::evaluate(int p){
   // [TODO] design your own evaluation function
-  Board cur_board = this->board;
-  int value[2];
+  int value=0;
+  int oppn_value=0;
   for (int i=0; i<BOARD_H; i++) {
     for (int j=0; j<BOARD_W; j++) {
-      char place = cur_board.board[0][i][j];
-      switch(place){
-        case '0':
-          continue;
-        case '1':
-          value[0] += 1;
+      int white_place = board.board[p][i][j];
+      switch(white_place){
+        case 1:
+          value += 1;
           break;
-        case '2':
-          value[0] += 5;
+        case 2:
+          value += 6;
           break;
-        case '3':
-          value[0] += 3;
+        case 3:
+          value += 3;
           break;
-        case '4':
-          value[0] += 3;
+        case 4:
+          value += 3;
+          break; 
+        case 5:
+          value += 9;
           break;
-        case '5':
-          value[0] += 9;
-          break;
-        case '6':
-          value[0] += 1000;
+        case 6:
+          value += 10000;
           break;
       }
     }
   }
   for (int i=0; i<BOARD_H; i++) {
     for (int j=0; j<BOARD_W; j++) {
-      char place = cur_board.board[1][i][j];
-      switch(place){
-        case '0':
-          continue;
-        case '1':
-          value[1] += 1;
+      int black_place = board.board[1 - p][i][j];
+      switch(black_place){
+        case 1:
+          oppn_value += 1;
           break;
-        case '2':
-          value[1] += 5;
+        case 2:
+          oppn_value += 6;
           break;
-        case '3':
-          value[1] += 3;
+        case 3:
+          oppn_value += 3;
           break;
-        case '4':
-          value[1] += 3;
+        case 4:
+          oppn_value += 3;
           break;
-        case '5':
-          value[1] += 9;
+        case 5:
+          oppn_value += 9;
           break;
-        case '6':
-          value[1] += 1000;
+        case 6:
+          oppn_value += 10000;
           break;
       }
     }
   }
-  return value[0] - value[1];
+
+  return value - oppn_value;
 }
 
 

@@ -9,5 +9,5 @@
 class Minimax{
 public:
   static Move get_move(State *state, int depth);
-  static int miniMax(State *state, int depth, int player);
+  static int miniMax(State *state, int depth, int cur_player);
 };
