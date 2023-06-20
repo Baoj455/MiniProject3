@@ -7,7 +7,7 @@
 
 int Alphabeta::alphaBeta(State* state, int depth, int a, int b, int init_player){
     int value;
-    if(depth == 0||!state->legal_actions.size())
+    if(depth == 0 || !state->legal_actions.size())
         return state->evaluate(init_player);
 
     state->get_legal_actions();

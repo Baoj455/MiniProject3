@@ -5,34 +5,113 @@
 #include "./state.hpp"
 #include "../config.hpp"
 
-
-/**
- * @brief evaluate the state
- * 
- * @return int 
- */
+char pawn[2][BOARD_H][BOARD_W] = {{
+      //white
+      {5, 5, 5, 5, 5},
+      {2, 2, 2, 2, 2},
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+    }, {
+      //black
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+      {2, 2, 2, 2, 2},
+      {5, 5, 5, 5, 5},
+}};
+char rook[2][BOARD_H][BOARD_W] = {{
+      //white
+      {1, 1, 1, 1, 1},
+      {2, 2, 2, 2, 2},
+      {1, 3, 3, 3, 1},
+      {1, 2, 2, 2, 1},
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+    }, {
+      //black
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+      {1, 2, 2, 2, 1},
+      {1, 3, 3, 3, 1},
+      {2, 2, 2, 2, 2},
+      {1, 1, 1, 1, 1},
+}};
+char bishop[2][BOARD_H][BOARD_W] = {{
+      //white
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+      {2, 2, 2, 2, 2},
+      {2, 2, 2, 2, 2},
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+    }, {
+      //black
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+      {2, 2, 2, 2, 2},
+      {2, 2, 2, 2, 2},
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+    }};
+char knight[2][BOARD_H][BOARD_W] = {{
+      //white
+      {1, 1, 1, 1, 1},
+      {1, 3, 3, 3, 1},
+      {1, 3, 3, 3, 1},
+      {1, 3, 3, 3, 1},
+      {1, 2, 2, 2, 1},
+      {1, 1, 1, 1, 1},
+    }, {
+      //black
+      {1, 1, 1, 1, 1},
+      {1, 2, 2, 2, 1},
+      {1, 3, 3, 3, 1},
+      {1, 3, 3, 3, 1},
+      {1, 3, 3, 3, 1},
+      {1, 1, 1, 1, 1},
+}};
+char queen[2][BOARD_H][BOARD_W] = {{
+      //white
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+      {1, 2, 2, 2, 1},
+      {1, 2, 2, 2, 1},
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+    }, {
+      //black
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+      {1, 2, 2, 2, 1},
+      {1, 2, 2, 2, 1},
+      {1, 1, 1, 1, 1},
+      {1, 1, 1, 1, 1},
+}};
 int State::evaluate(int p){
   // [TODO] design your own evaluation function
   int value=0;
   int oppn_value=0;
   for (int i=0; i<BOARD_H; i++) {
     for (int j=0; j<BOARD_W; j++) {
-      int white_place = board.board[p][i][j];
-      switch(white_place){
+      int piece = board.board[p][i][j];
+      switch(piece){
         case 1:
-          value += 1;
+          value += 1 * pawn[p][i][j];
           break;
         case 2:
-          value += 6;
+          value += 6 * rook[p][i][j];
           break;
         case 3:
-          value += 3;
+          value += 3 * bishop[p][i][j];
           break;
         case 4:
-          value += 3;
+          value += 3 * knight[p][i][j];
           break; 
         case 5:
-          value += 9;
+          value += 9 * queen[p][i][j];
           break;
         case 6:
           value += 10000;
@@ -42,22 +121,22 @@ int State::evaluate(int p){
   }
   for (int i=0; i<BOARD_H; i++) {
     for (int j=0; j<BOARD_W; j++) {
-      int black_place = board.board[1 - p][i][j];
-      switch(black_place){
+      int oppn_piece = board.board[1 - p][i][j];
+      switch(oppn_piece){
         case 1:
-          oppn_value += 1;
+          oppn_value += 1 * pawn[1 - p][i][j];
           break;
         case 2:
-          oppn_value += 6;
+          oppn_value += 6 * rook[1 - p][i][j];
           break;
         case 3:
-          oppn_value += 3;
+          oppn_value += 3 * bishop[1 - p][i][j];
           break;
         case 4:
-          oppn_value += 3;
+          oppn_value += 3 * knight[1 - p][i][j];
           break;
         case 5:
-          oppn_value += 9;
+          oppn_value += 9 * queen[1 - p][i][j];
           break;
         case 6:
           oppn_value += 10000;
@@ -260,7 +339,6 @@ void State::get_legal_actions(){
       }
     }
   }
-  std::cout << "\n";
   this->legal_actions = all_actions;
 }
 
