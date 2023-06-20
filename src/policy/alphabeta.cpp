@@ -5,18 +5,17 @@
 #define max(a, b) a > b ? a : b
 #define min(a, b) a < b ? a : b
 
-int Alphabeta::alphaBeta(State* state, int depth, int a, int b, bool player, int cur_player){
+int Alphabeta::alphaBeta(State* state, int depth, int a, int b, int init_player){
     int value;
-    
-    auto actions = state->legal_actions;
     if(depth == 0||!state->legal_actions.size())
-        return state->evaluate(cur_player);
+        return state->evaluate(init_player);
 
     state->get_legal_actions();
-    if(state->player==cur_player){
+    auto actions = state->legal_actions;
+    if(state->player == init_player){
         value = INT_MIN;
         for(auto &it : actions){
-            value = max(value, alphaBeta(state->next_state(it), depth - 1, a, b, false, cur_player));
+            value = max(value, alphaBeta(state->next_state(it), depth - 1, a, b, init_player));
             a = max(a, value);
             if(a >= b)
                 break;
@@ -26,7 +25,7 @@ int Alphabeta::alphaBeta(State* state, int depth, int a, int b, bool player, int
     else{
         value = INT_MAX;
         for(auto &it : actions){
-            value = min(value, alphaBeta(state->next_state(it), depth - 1, a, b, true, cur_player));
+            value = min(value, alphaBeta(state->next_state(it), depth - 1, a, b, init_player));
             b = min(b, value);
             if(b <= a)
                 break;
@@ -42,7 +41,7 @@ Move Alphabeta::get_move(State *state, int depth){
     auto actions = state->legal_actions;
     int value;
     for(auto& it : actions){
-        value = alphaBeta(state->next_state(it), depth - 1, INT_MIN, INT_MAX, false, state->player);
+        value = alphaBeta(state->next_state(it), depth - 1, INT_MIN, INT_MAX, state->player);
         if(value > max){
             max = value;
             next_move = it;
